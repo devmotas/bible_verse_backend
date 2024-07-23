@@ -5,5 +5,11 @@
             "src": "script.js",
             "use": "@vercel/node"
         }
+    ],
+    "routes": [
+        {
+            "src": "/verse",
+            "dest": "/script.js"
+        }
     ]
 }

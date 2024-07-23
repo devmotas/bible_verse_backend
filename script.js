@@ -70,6 +70,7 @@ async function updateToken() {
 }
 
 app.get('/verse', async (req, res) => {
+    res.send('Server is up and running!');
     try {
         const verse = await fetchRandomVerse();
         res.status(200).json(verse);
