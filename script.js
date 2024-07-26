@@ -1,11 +1,11 @@
 // server.js
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const cors = require('cors'); // Importa o middleware CORS
-const express = require('express'); // Usando Express para simplificar
+const cors = require('cors');
+const express = require('express');
 
 const app = express();
-app.use(cors()); // Habilita CORS para todas as rotas
+app.use(cors());
 
 const apiUrl = 'https://www.abibliadigital.com.br/api/verses/nvi/random';
 const tokenUrl = 'https://www.abibliadigital.com.br/api/users/token';
@@ -30,7 +30,7 @@ async function fetchRandomVerse() {
                 const errorData = await response.json();
                 if (response.status === 429 || errorData.msg === "Too many accounts created from this IP, please try again after an hour or login") {
                     await updateToken();
-                    attempt = 0; // Reset attempt count after updating token
+                    attempt = 0;
                 } else {
                     throw new Error('Failed to load verse');
                 }
@@ -83,7 +83,7 @@ async function updateToken() {
 app.get('/verse', async (req, res) => {
     try {
         const verses = [];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 10; i++) {
             const verse = await fetchRandomVerse();
             verses.push(verse);
             console.log(verses);
