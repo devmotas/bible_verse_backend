@@ -71,16 +71,16 @@ async function updateToken() {
     }
 }
 
-app.get('/verse', async (req, res) => {
-    try {
-        const verse = await fetchRandomVerse();
-        res.status(200).json(verse);
-    } catch (error) {
-        res.status(500).send('Failed to fetch verse');
-    }
-});
+// app.get('/verse', async (req, res) => {
+//     try {
+//         const verse = await fetchRandomVerse();
+//         res.status(200).json(verse);
+//     } catch (error) {
+//         res.status(500).send('Failed to fetch verse');
+//     }
+// });
 
-app.get('/verse/multiples', async (req, res) => {
+app.get('/verse', async (req, res) => {
     try {
         const verses = [];
         for (let i = 0; i < 50; i++) {
