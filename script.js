@@ -85,7 +85,8 @@ app.get('/verse/multiples', async (req, res) => {
         const verses = [];
         for (let i = 0; i < 50; i++) {
             const verse = await fetchRandomVerse();
-            verses.push(verse);
+            verses.push(verse[0]);
+            console.log(verses);
         }
         res.status(200).json(verses);
     } catch (error) {
