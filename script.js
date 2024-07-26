@@ -1,3 +1,5 @@
+// server.js
+
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const cors = require('cors'); // Importa o middleware CORS
 const express = require('express'); // Usando Express para simplificar
@@ -75,6 +77,19 @@ app.get('/verse', async (req, res) => {
         res.status(200).json(verse);
     } catch (error) {
         res.status(500).send('Failed to fetch verse');
+    }
+});
+
+app.get('/verse/multiples', async (req, res) => {
+    try {
+        const verses = [];
+        for (let i = 0; i < 50; i++) {
+            const verse = await fetchRandomVerse();
+            verses.push(verse);
+        }
+        res.status(200).json(verses);
+    } catch (error) {
+        res.status(500).send('Failed to fetch verses');
     }
 });
 
