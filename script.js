@@ -1,4 +1,4 @@
-// server.js
+require('dotenv').config();
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const cors = require('cors');
@@ -7,9 +7,9 @@ const express = require('express');
 const app = express();
 app.use(cors());
 
-const apiUrl = 'https://www.abibliadigital.com.br/api/verses/nvi/random';
-const tokenUrl = 'https://www.abibliadigital.com.br/api/users/token';
-let apiToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHIiOiJUdWUgSnVsIDIzIDIwMjQgMTg6Mzg6MjEgR01UKzAwMDAuNjY5ZmVjYjc2NTQwMDgwMDNlMjk4N2NkIiwiaWF0IjoxNzIxNzU5OTAxfQ.JG63PrSGANyj57AKrWlelDrUnhrFpqa4MrRGP2HmchQ';
+const apiUrl = process.env.API_URL;
+const tokenUrl = process.env.TOKEN_URL;
+let apiToken = process.env.API_TOKEN;
 
 async function fetchRandomVerse() {
     const maxRetries = 3;
@@ -55,8 +55,8 @@ async function updateToken() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email: 'devgustavomota@gmail.com',
-                password: '123456',
+                email: process.env.API_EMAIL,
+                password: process.env.API_PASSWORD,
             }),
         });
 
@@ -71,22 +71,12 @@ async function updateToken() {
     }
 }
 
-// app.get('/verse', async (req, res) => {
-//     try {
-//         const verse = await fetchRandomVerse();
-//         res.status(200).json(verse);
-//     } catch (error) {
-//         res.status(500).send('Failed to fetch verse');
-//     }
-// });
-
 app.get('/verse', async (req, res) => {
     try {
         const verses = [];
         for (let i = 0; i < 10; i++) {
             const verse = await fetchRandomVerse();
             verses.push(verse);
-            console.log(verses);
         }
         res.status(200).json(verses);
     } catch (error) {
